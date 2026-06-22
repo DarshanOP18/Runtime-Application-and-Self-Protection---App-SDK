@@ -10,9 +10,6 @@ import '../services/threat_reporter_service.dart';
 import '../services/geo_filter_service.dart';
 
 class RaspService {
-  static const _screenshotChannel = MethodChannel(
-    'com.example.rasp_app/screenshot',
-  );
   static const _securityChannel = MethodChannel(
     'com.example.rasp_app/security',
   );
@@ -103,8 +100,11 @@ class RaspService {
 
   /// CHECK: Offline Compliance (Max 30 mins offline)
   static Future<bool> _checkOfflineCompliance() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult != ConnectivityResult.none) {
+    final connectivityResults = await Connectivity().checkConnectivity();
+    final bool isOnline = connectivityResults.isNotEmpty &&
+        !connectivityResults.contains(ConnectivityResult.none);
+
+    if (isOnline) {
       _lastOnlineTime = DateTime.now();
       return false;
     }

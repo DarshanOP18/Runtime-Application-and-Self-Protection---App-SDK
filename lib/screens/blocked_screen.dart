@@ -20,7 +20,7 @@ class BlockedScreen extends StatelessWidget {
                 const Icon(Icons.shield, color: Colors.white, size: 80),
                 const SizedBox(height: 24),
                 const Text(
-                  '⚠ Security Threat Detected',
+                  'Security Threat Detected',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,

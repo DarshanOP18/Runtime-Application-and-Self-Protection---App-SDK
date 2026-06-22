@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'rasp/rasp_check_model.dart';
 import 'rasp/rasp_service.dart';
-import 'screens/home_screen.dart';
+import 'screens/auth_gate.dart';
 import 'screens/blocked_screen.dart';
 
 void main() {
@@ -14,12 +14,50 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const seed = Color(0xFF14B8A6);
+    const scaffold = Color(0xFF09111F);
+
     return MaterialApp(
       title: 'RASP App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorSchemeSeed: Colors.green,
+        brightness: Brightness.dark,
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: seed,
+          brightness: Brightness.dark,
+          surface: const Color(0xFF121A2A),
+        ),
+        scaffoldBackgroundColor: scaffold,
+        appBarTheme: const AppBarTheme(
+          centerTitle: false,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.white,
+        ),
+        cardTheme: CardThemeData(
+          color: const Color(0xFF121A2A),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFF10192A),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: const Color(0xFF121A2A),
+          contentTextStyle: const TextStyle(color: Colors.white),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          behavior: SnackBarBehavior.floating,
+        ),
       ),
       home: const RaspGate(),
     );
@@ -123,10 +161,7 @@ class _RaspGateState extends State<RaspGate> with WidgetsBindingObserver {
           );
         }
 
-        return HomeScreen(
-          result: result,
-          onRefresh: _runChecks,
-        );
+        return const AuthGate();
       },
     );
   }

@@ -16,47 +16,69 @@ class SecurityStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = isThreat ? Colors.red.shade300 : Colors.green.shade300;
-    final accentColor = isThreat ? Colors.red : Colors.green;
-    final backgroundColor =
-        isThreat ? Colors.red.shade50 : Colors.green.shade50;
+    final accentColor =
+        isThreat ? const Color(0xFFF97316) : const Color(0xFF14B8A6);
+    final surfaceColor =
+        isThreat ? const Color(0xFF1D1620) : const Color(0xFF101B23);
+    final borderColor = accentColor.withOpacity(0.24);
+    final statusLabel = isThreat ? 'Risk' : 'Secure';
 
     return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      elevation: 0,
+      margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: borderColor, width: 1.25),
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(color: borderColor, width: 1),
       ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: CircleAvatar(
-          backgroundColor: backgroundColor,
-          child: Icon(icon, color: accentColor),
+      child: Container(
+        decoration: BoxDecoration(
+          color: surfaceColor,
+          borderRadius: BorderRadius.circular(20),
         ),
-        title: Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-        ),
-        subtitle: Text(
-          subtitle ?? (isThreat ? 'Threat detected on your device' : 'No issues found'),
-          style: TextStyle(
-            fontSize: 12,
-            color: isThreat ? Colors.red.shade400 : Colors.grey.shade600,
+        child: ListTile(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          leading: Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: accentColor.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(icon, color: accentColor, size: 22),
           ),
-        ),
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            color: isThreat ? Colors.red.shade100 : Colors.green.shade100,
-            borderRadius: BorderRadius.circular(20),
+          title: Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+              color: Colors.white,
+            ),
           ),
-          child: Text(
-            isThreat ? '⚠ RISK' : '✔ SAFE',
-            style: TextStyle(
-              color: isThreat ? Colors.red.shade800 : Colors.green.shade800,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              subtitle ?? (isThreat ? 'Attention needed' : 'No issues found'),
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.white.withOpacity(0.58),
+              ),
+            ),
+          ),
+          trailing: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: accentColor.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Text(
+              statusLabel.toUpperCase(),
+              style: TextStyle(
+                color: accentColor,
+                fontWeight: FontWeight.w700,
+                fontSize: 11,
+                letterSpacing: 0.6,
+              ),
             ),
           ),
         ),
